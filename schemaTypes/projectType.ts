@@ -89,6 +89,25 @@ export const projectType = defineType({
         {type: 'spacerBlock'},
       ],
     }),
+    defineField({
+      name: 'seoTitle',
+      title: 'SEO Title',
+      type: 'string',
+      description: 'Custom title for search engines (leave empty to use project title)',
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'SEO Description',
+      type: 'text',
+      rows: 3,
+      description: 'Meta description for search engines',
+    }),
+    defineField({
+      name: 'seoImage',
+      title: 'SEO Image',
+      type: 'image',
+      description: 'Image for social media sharing (Open Graph)',
+    }),
   ],
   preview: {
     select: {
