@@ -57,6 +57,21 @@ export const siteSettingsType = defineType({
       title: 'Contact Email',
       type: 'string',
     }),
+    defineField({
+      name: 'theme',
+      title: 'Site Theme',
+      type: 'string',
+      description: 'Choose the color scheme for the entire site',
+      options: {
+        list: [
+          {title: 'Light Mode', value: 'light'},
+          {title: 'Dark Mode', value: 'dark'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'dark',
+      validation: (rule) => rule.required(),
+    }),
   ],
   preview: {
     select: {
