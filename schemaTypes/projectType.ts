@@ -41,10 +41,11 @@ export const projectType = defineType({
     }),
     defineField({
       name: 'order',
-      title: 'Order',
+      title: 'Display Order',
       type: 'number',
-      description: 'Order in which project appears (lower numbers first)',
-      initialValue: 0,
+      description: 'Position in grid (1 = first/left, 2 = second/middle, 3 = third/right, etc.). Lower numbers appear first.',
+      initialValue: 999,
+      validation: (rule) => rule.required().min(1).integer(),
     }),
     defineField({
       name: 'cardBackgroundColor',
@@ -114,14 +115,27 @@ export const projectType = defineType({
       title: 'title',
       pinned: 'pinToTopRow',
       homepage: 'showOnHomepage',
+      order: 'order',
     },
-    prepare({title, pinned, homepage}) {
+    prepare({title, pinned, homepage, order}) {
       const badges = []
-      if (pinned) badges.push('📌')
-      if (homepage) badges.push('🏠')
+      const labels = []
+
+      if (pinned) {
+        badges.push('📌')
+        labels.push('Pinned')
+      }
+      if (homepage) {
+        badges.push('🏠')
+        labels.push('Homepage')
+      }
+
+      const orderInfo = order !== undefined ? `Order: ${order}` : 'Order: Not set'
+      const subtitle = labels.length > 0 ? `${labels.join(' & ')} • ${orderInfo}` : orderInfo
+
       return {
         title: `${badges.join(' ')} ${title}`,
-        subtitle: badges.length > 0 ? 'Featured' : '',
+        subtitle: subtitle,
       }
     },
   },
